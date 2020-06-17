@@ -9,4 +9,4 @@ A Bash Script Library to perform a simple System Cleanup in Ubuntu.
 <br>
 
 - Best recommended to read the script and make changes accordingly. <br><br>
-- Every part of the script has comments (#) explaining the processes involved in the script.
+- Every part of the script has `echo` / comments (`#`) explaining the processes involved in the script.
