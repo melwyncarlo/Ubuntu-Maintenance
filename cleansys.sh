@@ -50,12 +50,16 @@ echo "I.  Mozilla Firefox . . ."
 rm -r -v ~/.mozilla && rm -r -v ~/.cache/mozilla
 echo
 echo "II. Google Chrome . . ."
+# Copying the Bookmarks Database - START
 cp -v ~/.config/google-chrome/Default/Bookmarks ~/
 cp -v ~/.config/google-chrome/Default/Bookmarks.bak ~/
+# Copying the Bookmarks Database - END
 rm -r -v ~/.config/google-chrome && rm -r -v ~/.cache/google-chrome
 mkdir -v ~/.config/google-chrome/Default
+# Restoring the Bookmarks Database - START
 mv -v ~/Bookmarks ~/.config/google-chrome/Default
 mv -v ~/Bookmarks.bak ~/.config/google-chrome/Default
+# Restoring the Bookmarks Database - END
 echo
 echo " . . . Done"
 echo
