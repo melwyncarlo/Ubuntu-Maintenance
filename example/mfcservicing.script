@@ -1,0 +1,28 @@
+#!/bin/bash
+
+sudo clear
+clear
+
+echo "Updating . . ."
+sudo apt-get update -y
+echo " . . . Done"
+echo
+
+echo "Upgrading . . ."
+sudo apt-get upgrade -y
+echo " . . . Done"
+echo
+
+echo "Installing Freecad-Daily Latest Development Release . . ."
+sudo apt-get install freecad-daily -y
+echo " . . . Done"
+echo
+
+echo "Updating, again . . ."
+sudo apt-get update -y
+echo " . . . Done"
+echo
+
+sh ~/cleansys.sh
+
+
