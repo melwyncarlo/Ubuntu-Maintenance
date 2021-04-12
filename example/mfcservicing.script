@@ -1,5 +1,27 @@
 #!/bin/bash
 
+function_FilenameCheck()
+{
+    dir_path_str=$1
+    files_list_array=($(ls -R "$dir_path_str"))
+    files_list_array=("${files_list_array[@]:1}")
+    for file_elem in "${files_list_array[@]}"
+    do
+        if [ ${file_elem::1} == "/" ]
+        then
+            dir_path_str=${file_elem::-1}
+        else
+            temp_str=$(echo "$file_elem" | tr -d '[a-zA-Z0-9\_\-\.]');
+            if [ $temp_str != "" ]
+            then
+                echo
+                echo "Issue at '$dir_path_str'"
+                echo "Issue in '$file_elem'"
+            fi
+        fi
+    done
+}
+
 sudo clear
 clear
 
@@ -24,5 +46,22 @@ echo " . . . Done"
 echo
 
 sh ~/cleansys.sh
+
+echo
+echo "Checking for incorrect file naming . . ."
+echo "File Directory 1 of 2: $HOME/Desktop"
+function_FilenameCheck "$HOME/Desktop"
+echo
+echo " . . . Done"
+echo
+
+echo
+echo "Checking for incorrect file naming . . ."
+echo "File Directory 2 of 2: $HOME/Documents"
+function_FilenameCheck "$HOME/Documents"
+echo
+echo " . . . Done"
+echo
+echo
 
 
