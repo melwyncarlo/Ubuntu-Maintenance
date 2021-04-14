@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sudo cp mfcservicing /usr/bin/mfcservicing
-
 cp cleansys.sh ~/cleansys.sh
-cp mfcservicing.log ~/mfcservicing.log
 cp mfcservicing.script ~/mfcservicing.script
+cp mfcservicing.log ~/mfcservicing.log

@@ -1,5 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
 rm ~/mfcservicing.log
 
-sh ~/mfcservicing.script 2>&1 | tee ~/mfcservicing.log
+bash ~/mfcservicing.script 2>&1 | tee ~/mfcservicing.log

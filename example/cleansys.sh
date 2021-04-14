@@ -1,13 +1,12 @@
 #!/bin/bash
 
 echo "---------------------------------------------"
+echo "CLEANING  UP  THE  UBUNTU  SYSTEM"
 echo
-echo -e "\e[1m CLEANING  UP  THE  UBUNTU  SYSTEM"
+echo "A simple script by Melwyn  F. Carlo"
 echo
-echo -e "\e[0mA simple script by \e[1m\e[7mMelwyn  F. Carlo"
-echo -e "\e[0m"
-echo -e "\e[5m`date`"
-echo -e "\e[0m---------------------------------------------"
+echo "`date`"
+echo "---------------------------------------------"
 echo
 echo
 
@@ -79,11 +78,11 @@ echo
 echo
 echo
 echo "---------------------------------------------"
+echo "ALL  CLEANED  UP !"
 echo
-echo -e "\e[1m ALL  CLEANED  UP !"
-echo -e "\e[0m"
-echo -e "\e[5m`date`"
-echo -e "\e[0m---------------------------------------------"
+echo "`date`"
+echo "---------------------------------------------"
 echo
 echo
+
 

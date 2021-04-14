@@ -1,24 +1,99 @@
 #!/bin/bash
 
-function_FilenameCheck()
+return_val=""
+
+function_FilenameCheckProc()
 {
-    dir_path_str=$1
-    files_list_array=($(ls -R "$dir_path_str"))
-    files_list_array=("${files_list_array[@]:1}")
-    for file_elem in "${files_list_array[@]}"
-    do
-        if [ ${file_elem::1} == "/" ]
+    input_dirname="$1"
+    input_filename="$2"
+    file_type="$3"
+    path_exception_1="/Documents/Database/Software"
+    if [[ "$input_dirname" == *"$path_exception_1"* ]]
+    then
+        return_val="$input_filename"
+    else
+        if [[ "$file_type" == "1" ]]
         then
-            dir_path_str=${file_elem::-1}
+            file_type="directory"
         else
-            temp_str=$(echo "$file_elem" | tr -d '[a-zA-Z0-9\_\-\.]');
-            if [ $temp_str != "" ]
-            then
-                echo
-                echo "Issue at '$dir_path_str'"
-                echo "Issue in '$file_elem'"
-            fi
+            file_type="file"
         fi
+        temp_str1=$(echo "$input_filename" | tr -d '[a-zA-Z0-9\_\-\.]');
+        if [[ "$temp_str1" != "" ]]
+        then
+            echo
+            echo "Issue at:  '$input_dirname'"
+            echo "Issue in $file_type:  '$input_filename'"
+            echo "-->  Enter '1' for 'Yes', or any other key for 'No'."
+            while true
+            do
+                read -p "-->  Do you wish to rename?  " input_rename
+                if [[ "$input_rename" == "1" ]]
+                then
+                    read -p "-->  New filename:  " input_filename_new
+                    if [[ "$input_filename_new" == "" ]]
+                    then
+                        input_filename_new="(#)"
+                    fi
+                    temp_str2=$(echo "$input_filename_new" | \
+                    tr -d '[a-zA-Z0-9\_\-\.]');
+                    if [[ "$temp_str2" == "" ]]
+                    then
+                        mv $input_dirname/$input_filename \
+                        $input_dirname/$input_filename_new
+                        return_val="$input_filename_new"
+                        break
+                    else
+                        echo "-->  Invalid new filename entered." \
+                        "Please try again."
+                    fi
+                else
+                    return_val="$input_filename"
+                    break
+                fi
+            done
+        else
+            return_val="$input_filename"
+        fi
+    fi
+}
+
+function_FilenameCheck()
+{    
+    IFS=$(echo -en "\n\b")
+    dir_path_str="$1"
+    count_val=1
+    dir_list_array1=(`find "$dir_path_str" -type d`)
+    while [ $count_val -lt ${#dir_list_array1[@]} ]
+    do
+        dir_dirname=`dirname "${dir_list_array1[$count_val]}"`
+        dir_basename1=`basename "${dir_list_array1[$count_val]}"`
+        function_FilenameCheckProc "$dir_dirname" "$dir_basename1" "1"
+        dir_basename2="$return_val"
+        if [[ "$dir_basename1" != "$dir_basename2" ]]
+        then
+            search_str="$dir_dirname/$dir_basename1"
+            replace_str="$dir_dirname/$dir_basename2"
+            for i in ${!dir_list_array1[@]}
+            do
+                if [[ "${dir_list_array1[$i]}" == *"$search_str"* ]]
+                then
+                    dir_list_array1[$i]=`echo \
+                    "${dir_list_array1[$i]/$search_str/$replace_str}"`
+                fi
+            done
+        fi
+        let "count_val=count_val+1"
+    done
+    for dir_elem in "${dir_list_array1[@]}"
+    do
+        file_list_array=(`find "$dir_elem" -maxdepth 1 -xtype f`)
+        for file_elem in "${file_list_array[@]}"
+        do
+            file_dirname=`dirname "$file_elem"`
+            file_basename=`basename "$file_elem"`
+            function_FilenameCheckProc "$file_dirname" "$file_basename" "0"
+        done
     done
 }
 
@@ -61,6 +136,31 @@ echo "File Directory 2 of 2: $HOME/Documents"
 function_FilenameCheck "$HOME/Documents"
 echo
 echo " . . . Done"
+echo
+echo
+
+drive_path="/media/`whoami`/HD-E1/Backup"
+drive_path="$drive_path/mfcarlo_HP_Pavilion_dv6_Notebook_PC"
+while true
+do
+    if [ -d $drive_path ]
+    then
+        break
+    else
+        echo
+        echo "The hard-drive device 'HD-E1' is not properly connected."
+        echo "Please check the device and try again."
+        read -n 1 -s -r -p "Press any key to continue:  "
+        echo
+    fi
+done
+
+echo
+echo "Doing a DiffCheck : 1 of 2 : Desktop"
+diff -qr "$drive_path/Desktop" "$HOME/Desktop"
+echo
+echo "Doing a DiffCheck : 2 of 2 : Documents"
+diff -qr "$drive_path/Documents" "$HOME/Documents"
 echo
 echo
 
