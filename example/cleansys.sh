@@ -55,23 +55,27 @@ rm -rf ~/.local/share/Trash/*
 echo " . . . Done"
 echo
 
+# Execute the following four, if required.
+# Although it is best to sort out the below
+# directories, and keep them clean at all times.
+
 echo "Clearing the Downloads directory . . ."
--rf ~/Downloads/*
+rm -rfv ~/Downloads/*
 echo " . . . Done"
 echo
 
 echo "Clearing the Pictures directory . . ."
--rf ~/Pictures/*
+rm -rfv ~/Pictures/*
 echo " . . . Done"
 echo
 
 echo "Clearing the Videos directory . . ."
--rf ~/Videos/*
+rm -rfv ~/Videos/*
 echo " . . . Done"
 echo
 
 echo "Clearing the Music directory . . ."
--rf ~/Music/*
+rm -rfv ~/Music/*
 echo " . . . Done"
 echo
 
